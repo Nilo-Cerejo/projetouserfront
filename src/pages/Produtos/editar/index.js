@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import './index.css';
  
-class EditarUsuario extends Component {
+class EditarProdutos extends Component {
     constructor(props) {
         super(props);
  
         this.state = {
-            usuario: {
-                nome: "",
-                salario: "",
-                dataNascimento: ""
+            produtos: {
+                nomeProduto: "",
+                preçoCusto: "",
+                preçoVenda: "",
+                quantidade: ""
             },
             erro: null,
             redirect: false
@@ -32,13 +33,13 @@ class EditarUsuario extends Component {
     componentDidMount() {
         const { id } = this.props.match.params;
  
-        fetch(`http://localhost:3003/sistema/usuarios/${id}`)
+        fetch(`http://localhost:3003/sistema/produtos/${id}`)
             .then(data => {
                 data.json().then(data => {
                     if (data.error) {
                         this.setState({ erro: data.error });
                     } else {
-                        this.setState({ usuario: data });
+                        this.setState({ produtos: data });
                     }
                 });
             })
@@ -49,59 +50,74 @@ class EditarUsuario extends Component {
         const { redirect } = this.state;
  
         if (redirect) {
-            return <Redirect to="/usuarios" />;
+            return <Redirect to="/produtos" />;
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <fieldset>
-                        <legend>Criar Usuário</legend>
-                        <div className="usuario-update">
-                            <label htmlFor="nome">Nome </label>
+                        <legend>Casdastro Produtos</legend>
+                        <div className="produtos-update">
+                            <label htmlFor="nomeProduto">Produto </label>
                             <br />
                             <input
                                 type="text"
-                                id="nome"
-                                name="nome"
-                                placeholder="Nome"
+                                id="nomeProduto"
+                                name="nomeProduto"
+                                placeholder="NomeProduto"
                                 minLength="3"
                                 maxLength="100"
                                 required
-                                value={this.state.usuario.nome}
+                                value={this.state.produtos.nomeProduto}
                                 onChange={this.handleInputChange}
                             />
                         </div>
-                        <div className="usuario-update">
-                            <label htmlFor="salario">Salário </label>
+                        <div className="produtos-update">
+                            <label htmlFor="preçoCusto">Preço Custo</label>
                             <br />
                             <input
                                 type="text"
-                                id="salario"
-                                name="salario"
-                                placeholder="Matrícula"
-                                min="1"
-                                max="99999"
+                                id="PreçoCusto"
+                                name="PreçoCusto"
+                                placeholder="PreçoCusto"
                                 required
-                                value={this.state.usuario.salario}
+                                value={this.state.produtos.PreçoCusto}
                                 onChange={this.handleInputChange}
                             />
                         </div>
-                        <div className="usuario-update">
-                            <label htmlFor="dataNascimento">Data de Nascimento </label>
+                        <div className="produtos-update">
+                            <label htmlFor="preçoVenda">Preço Venda </label>
                             <br />
                             <input
                                 type="text"
-                                id="dataNascimento"
-                                name="dataNascimento"
-                                placeholder="dataNascimento"
+                                id="preçoVenda"
+                                name="preçoVenda"
+                                placeholder="preçoVenda"
                                 required
-                                value={this.state.usuario.dataNascimento}
+                                value={this.state.produtos.preçoVenda}
                                 onChange={this.handleInputChange}
                             />
                         </div>
+                        <div className="produtos-update">
+                            <label htmlFor="quantidade">Quantidade</label>
+                            <br />
+                            <input
+                                type="text"
+                                id="quantidade"
+                                name="quantidade"
+                                placeholder="quantidade"
+                                required
+                                value={this.state.produtos.quantidade}
+                                onChange={this.handleInputChange}
+                            /> 
+
+                        </div>
+                        <br/>
+
  
                         <button type="submit" className="btn btn-primary">
                             Atualizar
                     </button>
+                    
                     </fieldset>
                 </form>
             );
@@ -116,16 +132,16 @@ class EditarUsuario extends Component {
         const value = target.value;
  
         this.setState(prevState => ({
-            usuario: { ...prevState.usuario, [name]: value }
+            produtos: { ...prevState.produtos, [name]: value }
         }));
     };
  
     handleSubmit = event => {
-        const { id } = this.state.usuario;
+        const { id } = this.state.produtos;
  
-        fetch(`http://localhost:3003/sistema/usuarios/${id}`, {
+        fetch(`http://localhost:3003/sistema/produtos/${id}`, {
             method: "put",
-            body: JSON.stringify(this.state.usuario),
+            body: JSON.stringify(this.state.produtos),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -147,4 +163,4 @@ class EditarUsuario extends Component {
     };
 }
  
-export default EditarUsuario;
+export default EditarProdutos;

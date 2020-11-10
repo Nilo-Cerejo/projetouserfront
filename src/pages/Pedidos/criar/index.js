@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import './index.css';
+
+
+
  
-class CriarUsuario extends Component {
+class CriarPedidos extends Component {
     constructor(props) {
         super(props);
  
         this.state = {
-            usuario: {
+            pedidos: {
                 nome: "",
-                salario: "",
-                dataNascimento: "",
-                ativo: "true"
+                telefone: "",
+                nomeProduto: "",
+                quantidade: "",
             },
             erro: null,
             redirect: false
@@ -33,13 +36,13 @@ class CriarUsuario extends Component {
     render() {
         const { redirect } = this.state;
         if (redirect) {
-            return <Redirect to="/usuarios" />;
+            return <Redirect to="/pedidos" />;
         } else {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <fieldset>
-                        <legend>Criar Usuário</legend>
-                        <div className="usuario-insert">
+                        <legend>Cliente</legend>
+                        <div className="pedidos-insert">
                             <label htmlFor="nome">Nome </label>
                             <br />
                             <input
@@ -50,59 +53,57 @@ class CriarUsuario extends Component {
                                 minLength="3"
                                 maxLength="100"
                                 required
-                                value={this.state.usuario.nome}
+                                value={this.state.pedidos.nome}
                                 onChange={this.handleInputChange}
                             />
                         </div>
-                        <div className="usuario-insert">
-                            <label htmlFor="salario">Salário </label>
-                            <br />
+                        
+                        <div className="pedidos-insert">
+                            <label htmlFor="telefone">Telefone
+                            </label>
+                            <br/>
                             <input
-                                type="text"
-                                id="salario"
-                                name="salario"
-                                placeholder="Salário"
-                                required
-                                value={this.state.usuario.salario}
-                                onChange={this.handleInputChange}
-                            />
-                        </div>
-                        <div className="usuario-insert">
-                            <label htmlFor="dataNascimento">Data de Nascimento </label>
-                            <br />
-                            <input
-                                type="date"
-                                id="dataNascimento"
-                                name="dataNascimento"
-                                placeholder="Data de Nascimento"
-                                required
-                                value={this.state.usuario.dataNascimento}
-                                onChange={this.handleInputChange}
-                            />
-                        </div>
- 
-                        <div className="usuario-insert">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="ativo"
-                                    value="true"
-                                    checked={this.state.usuario.ativo === "true"}
+                                    type="text"
+                                    id="telefone"
+                                    name="telefone"
+                                    placeholder="telefone"
+                                    required
+                                    value={this.state.pedidos.telefone}
                                     onChange={this.handleInputChange}
                                 />
-                                Ativo
-                        </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="false"
-                                    name="ativo"
-                                    checked={this.state.usuario.ativo === "false"}
+
+                        </div>
+                        <div className="pedidos-insert">
+                            <label htmlFor="nomeProduto">Produto
+                            </label>
+                            <br/>
+                            <input
+                                    type="text"
+                                    id="nomeProduto"
+                                    name="nomeProduto"
+                                    placeholder="nomeProduto"
+                                    required
+                                    value={this.state.pedidos.nomeProduto}
                                     onChange={this.handleInputChange}
                                 />
-                                Inativo
-                        </label>
+
                         </div>
+                        <div className="pedidos-insert">
+                            <label htmlFor="quantidade">Quantidade
+                            </label>
+                            <br/>
+                            <input
+                                    type="text"
+                                    id="quantidade"
+                                    name="quantidade"
+                                    placeholder="quantidade"
+                                    required
+                                    value={this.state.pedidos.quantidade}
+                                    onChange={this.handleInputChange}
+                                />
+
+                        </div>
+                        <br/>
  
  
                         <button type="submit" className="btn btn-primary">
@@ -120,15 +121,15 @@ class CriarUsuario extends Component {
         const value = target.value;
  
         this.setState(prevState => ({
-            usuario: { ...prevState.usuario, [name]: value }
+            pedidos: { ...prevState.pedidos, [name]: value }
         }));
         console.log(value);
     };
  
     handleSubmit = event => {
-        fetch("http://localhost:3003/sistema/usuarios", {
+        fetch("http://localhost:3003/sistema/pedidos", {
             method: "post",
-            body: JSON.stringify(this.state.usuario),
+            body: JSON.stringify(this.state.pedidos),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -150,4 +151,4 @@ class CriarUsuario extends Component {
     };
 }
  
-export default CriarUsuario;
+export default CriarPedidos;

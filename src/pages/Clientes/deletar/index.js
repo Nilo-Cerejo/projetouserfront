@@ -3,12 +3,12 @@ import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import './index.css';
  
-class DeletarUsuario extends Component {
+class DeletarClientes extends Component {
     constructor(props) {
         super(props);
  
         this.state = {
-            usuario: {},
+            clientes: {},
             erro: null,
             redirect: false
         };
@@ -29,13 +29,13 @@ class DeletarUsuario extends Component {
     componentDidMount() {
         const { id } = this.props.match.params;
  
-        fetch(`http://localhost:3003/sistema/usuarios/${id}`)
+        fetch(`http://localhost:3003/sistema/clientes/${id}`)
             .then(data => {
                 data.json().then(data => {
                     if (data.error) {
                         this.setState({ erro: data.error });
                     } else {
-                        this.setState({ usuario: data });
+                        this.setState({ clientes: data });
                     }
                 });
             })
@@ -46,13 +46,13 @@ class DeletarUsuario extends Component {
         const { redirect } = this.state;
  
         if (redirect) {
-            return <Redirect to="/usuarios" />;
+            return <Redirect to="/clientes" />;
         } else {
             return (
                 <fieldset>
                     <legend>Deletar Usuário</legend>
-                    <div className="usuario-delete">
-                        <label htmlFor="nome">{this.state.usuario.nome} </label>
+                    <div className="clientes-delete">
+                        <label htmlFor="nome">{this.state.clientes.nome} </label>
                         <p>Tem certeza que deseja deletar este registro?</p>
  
                         <button
@@ -61,7 +61,7 @@ class DeletarUsuario extends Component {
                             Remover
                         </button>
                         <br /><br />
-                        <Link to={`/usuarios`}>Voltar</Link>
+                        <Link to={`/clientes`}>Voltar</Link>
                     </div>
                 </fieldset>
             );
@@ -71,7 +71,7 @@ class DeletarUsuario extends Component {
     handleClick = event => {
         const { id } = this.props.match.params;
  
-        fetch(`http://localhost:3003/sistema/usuarios/${id}`, {
+        fetch(`http://localhost:3003/sistema/clientes/${id}`, {
             method: "delete"
         })
             .then(data => {
@@ -91,4 +91,4 @@ class DeletarUsuario extends Component {
     };
 }
  
-export default DeletarUsuario;
+export default DeletarClientes;
